@@ -538,7 +538,7 @@ function saveWork() {
   renderSaved();
 
   // שמירה ל-Google Sheets
-  const SHEET_URL = 'https://script.google.com/macros/s/AKfycbwHuAITzEiS5ZqPGxsgZz1emUbxFnJF5-yCWI-bUQyHfHao4RAfrmCEzTM5OCGuzMwQIQ/exec';
+  const SHEET_URL = 'https://script.google.com/macros/s/AKfycbzRnwCxVPV9s5Li-CMIWMkTq9bTK8FYwvdUwuEoIJ-wqYkDSwSEO_nMQqqLOtv5HnT-4g/exec';
   const params = new URLSearchParams();
   Object.keys(work).forEach(k => params.append(k, work[k] || ''));
   showToast('⏳ שומר...', '');
