@@ -271,6 +271,7 @@
             <option>G203</option><option>G503</option><option>G505</option>
             <option>סורק</option><option>רחפן</option><option>מאזנת</option>
           </select>
+          <input type="text" id="txtFile1" placeholder="שם קובץ במכשיר" style="margin-top:8px;">
         </div>
         <div class="field">
           <label>מכשיר נוסף</label>
@@ -280,6 +281,20 @@
             <option>TG03</option><option>TG04</option><option>TG05</option>
             <option>G203</option><option>G503</option><option>G505</option>
             <option>סורק</option><option>רחפן</option><option>מאזנת</option>
+          </select>
+          <input type="text" id="txtFile2" placeholder="שם קובץ במכשיר" style="margin-top:8px;">
+        </div>
+      </div>
+
+      <div class="field-row single">
+        <div class="field">
+          <label>טאבלט</label>
+          <select id="cmbTablet">
+            <option value="">— בחר טאבלט —</option>
+            <option>טאבלט ויסאם</option>
+            <option>טאבלט נאסר</option>
+            <option>טאבלט ממדוח</option>
+            <option>טאבלט 05</option>
           </select>
         </div>
       </div>
@@ -338,7 +353,7 @@ const cities = ["אבו בלאל", "אבו גווייעד (שבט)", "אבו ג�
 const workers = [
   'ויסאם אבו סאלח','אייל איבראהים','פיראס אבו סאלח','ממדוח ספדי',
   'ראגב דעבוס','מגד דעבוס','חאזם נחלה','נאסר נאסר','חוסין אבו סאלח',
-  'איהם סבאג',"תחריר ע'ית",'אדהם שרף','בשאר סבאג','נאגי סבאג','מגדי סבאג'
+  'איהם סבאג','אדהם שרף','בשאר סבאג','נאגי סבאג','מגדי סבאג'
 ];
 
 let selectedStatus = '', savedWorks = [];
@@ -508,7 +523,10 @@ function saveWork() {
     endTime:     be.classList.contains('empty') ? '' : be.textContent,
     duration:    document.getElementById('totalText').textContent || '',
     gps:         document.getElementById('cmbGps').value,
+    gpsFile:     document.getElementById('txtFile1').value.trim(),
     device2:     document.getElementById('cmbDevice2').value,
+    device2File: document.getElementById('txtFile2').value.trim(),
+    tablet:      document.getElementById('cmbTablet').value,
     team:        [...teamBtns].map(b=>b.dataset.name).join(', '),
     status:      selectedStatus,
     notes:       document.getElementById('txtNotes').value.trim()
@@ -535,7 +553,10 @@ function clearFormFields() {
   document.getElementById('cmbType').value='';
   document.getElementById('otherTypeRow').style.display='none';
   document.getElementById('cmbGps').value='';
+  document.getElementById('txtFile1').value='';
   document.getElementById('cmbDevice2').value='';
+  document.getElementById('txtFile2').value='';
+  document.getElementById('cmbTablet').value='';
   document.getElementById('btnStart').textContent='— בחר שעה —'; document.getElementById('btnStart').classList.add('empty');
   document.getElementById('btnEnd').textContent='— בחר שעה —'; document.getElementById('btnEnd').classList.add('empty');
   document.getElementById('totalBadge').style.display='none';
@@ -554,7 +575,7 @@ function renderSaved() {
   [...savedWorks].reverse().forEach(w=>{
     const dot=w.status==='הושלם'?'dot-done':'dot-partial';
     const d=document.createElement('div'); d.className='saved-item';
-    d.innerHTML=`<div class="s-dot ${dot}"></div><div class="s-num">${w.workNo}</div><div class="s-info"><strong>${w.city} — ${w.type}</strong><span>👷 ${w.team}</span><span>⏰ ${w.startTime||'—'} עד ${w.endTime||'—'}${w.duration?' ('+w.duration+')':''}</span></div>`;
+    d.innerHTML=`<div class="s-dot ${dot}"></div><div class="s-num">${w.workNo}</div><div class="s-info"><strong>${w.city} — ${w.type}</strong><span>👷 ${w.team}</span><span>⏰ ${w.startTime||'—'} עד ${w.endTime||'—'}${w.duration?' ('+w.duration+')':''}</span>${w.tablet?`<span>📱 ${w.tablet}</span>`:''}</div>`;
     list.appendChild(d);
   });
 }
